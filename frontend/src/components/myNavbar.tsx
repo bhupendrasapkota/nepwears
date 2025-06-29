@@ -48,6 +48,7 @@ const MyNavbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false); // Mobile menu open/close
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null); // Which dropdown is open
   const [collections, setCollections] = useState<CollectionItem[]>([]); // Dynamic collections
+  const [isScrolled, setIsScrolled] = useState(false); // Track scroll position for navbar bg
 
   // -----------------------------
   // Effects
@@ -55,6 +56,14 @@ const MyNavbar: React.FC = () => {
   // Fetch collections on mount (simulate API)
   useEffect(() => {
     getCollections().then(setCollections);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // -----------------------------
@@ -84,7 +93,11 @@ const MyNavbar: React.FC = () => {
   return (
     <>
       {/* Header Bar (Logo, Hamburger, Desktop Nav) */}
-      <header className="fixed left-0 right-0 top-0 bg-white z-50 w-full">
+      <header
+        className={`fixed left-0 right-0 top-0 z-50 w-full transition-colors duration-200 ${
+          isScrolled ? "bg-white border-b-white shadow-sm" : "bg-transparent"
+        }`}
+      >
         <div className="w-full px-6 lg:px-8 xl:px-12">
           <div className="flex items-center justify-between h-24">
             {/* Mobile Hamburger Menu - Left Side */}
