@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import Navbar from "@/components/myNavbar";
+import MyNavbar from "../components/myNavbar";
 
 export const metadata: Metadata = {
   title: "NepWears",
@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body className="antialiased">
-        <Navbar />
+        <MyNavbar />
         {children}
       </body>
     </html>

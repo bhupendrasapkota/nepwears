@@ -84,7 +84,7 @@ const MyNavbar: React.FC = () => {
   return (
     <>
       {/* Header Bar (Logo, Hamburger, Desktop Nav) */}
-      <header className="fixed left-0 right-0 top-0 bg-white border-b border-gray-200 z-50 w-full shadow-sm">
+      <header className="fixed left-0 right-0 top-0 bg-white z-50 w-full">
         <div className="w-full px-6 lg:px-8 xl:px-12">
           <div className="flex items-center justify-between h-24">
             {/* Mobile Hamburger Menu - Left Side */}
@@ -165,7 +165,7 @@ const MyNavbar: React.FC = () => {
                         <span className="relative z-10">Shop All</span>
                         <span className="absolute left-0 top-0 w-0 h-full bg-black transition-all duration-300 group-hover/item:w-full"></span>
                       </Link>
-                      {collections.map((item) => (
+                      {collections.slice(0, 4).map((item) => (
                         <Link
                           key={item.slug}
                           href={`/${item.slug}`}
@@ -200,7 +200,7 @@ const MyNavbar: React.FC = () => {
             <div className="flex items-center space-x-4 lg:space-x-6">
               {/* Account - Hidden on Mobile */}
               <Link
-                href="/account"
+                href="/login"
                 className="hidden lg:block text-gray-700 hover:text-gray-900 transition-all duration-200 p-2 rounded-md"
                 aria-label="Account"
               >
@@ -295,7 +295,7 @@ const MyNavbar: React.FC = () => {
                 >
                   Shop All
                 </Link>
-                {collections.map((col) => (
+                {collections.slice(0, 4).map((col) => (
                   <Link
                     key={col.slug}
                     href={`/${col.slug}`}
@@ -341,7 +341,7 @@ const MyNavbar: React.FC = () => {
         {/* Bottom: Account & Contact (Mobile) */}
         <div className="px-8 pb-8 mt-auto space-y-4">
           <Link
-            href="/account"
+            href="/login"
             onClick={toggleMobileMenu}
             className="block text-sm tracking-widest uppercase text-gray-700 hover:text-black"
           >
