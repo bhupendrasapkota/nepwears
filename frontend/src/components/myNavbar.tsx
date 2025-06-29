@@ -10,15 +10,25 @@ import {
   RiCloseLine,
 } from "react-icons/ri";
 
-// Type for a collection item
+// -----------------------------
+// Types
+// -----------------------------
+
+// Type for a collection item (for Shop By Collection menu)
 interface CollectionItem {
   name: string;
   slug: string;
 }
 
-// Simulate fetching collections (replace with real fetch later)
+// -----------------------------
+// Simulated API (replace with real fetch in backend)
+// -----------------------------
+
+/**
+ * Simulate fetching collections from backend.
+ * Replace this function with a real API call when backend is ready.
+ */
 const getCollections = async (): Promise<CollectionItem[]> => {
-  // In the future, replace this with a fetch call
   return [
     { name: "Embroidered Shirt", slug: "embroidered-shirt" },
     { name: "Old Money Polos", slug: "old-money-polos" },
@@ -27,11 +37,31 @@ const getCollections = async (): Promise<CollectionItem[]> => {
   ];
 };
 
-export const MyNavbar: React.FC = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [collections, setCollections] = useState<CollectionItem[]>([]);
+// -----------------------------
+// Main Navbar Component
+// -----------------------------
 
+const MyNavbar: React.FC = () => {
+  // -----------------------------
+  // State
+  // -----------------------------
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false); // Mobile menu open/close
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null); // Which dropdown is open
+  const [collections, setCollections] = useState<CollectionItem[]>([]); // Dynamic collections
+
+  // -----------------------------
+  // Effects
+  // -----------------------------
+  // Fetch collections on mount (simulate API)
+  useEffect(() => {
+    getCollections().then(setCollections);
+  }, []);
+
+  // -----------------------------
+  // Handlers
+  // -----------------------------
+
+  // Toggle mobile menu open/close
   const toggleMobileMenu = (): void => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
     // Prevent body scroll when menu is open
@@ -42,16 +72,18 @@ export const MyNavbar: React.FC = () => {
     }
   };
 
+  // Toggle dropdowns (e.g., Shop By Collection)
   const toggleDropdown = (dropdown: string): void => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
 
-  useEffect(() => {
-    getCollections().then(setCollections);
-  }, []);
+  // -----------------------------
+  // Render
+  // -----------------------------
 
   return (
     <>
+      {/* Header Bar (Logo, Hamburger, Desktop Nav) */}
       <header className="fixed left-0 right-0 top-0 bg-white border-b border-gray-200 z-50 w-full shadow-sm">
         <div className="w-full px-6 lg:px-8 xl:px-12">
           <div className="flex items-center justify-between h-24">
@@ -69,7 +101,6 @@ export const MyNavbar: React.FC = () => {
                 )}
               </button>
             </div>
-
             {/* Logo - Center on Mobile, Left on Desktop */}
             <div className="flex-shrink-0 lg:flex-shrink-0 -mr-8 lg:mr-0">
               <Link href="/" className="block">
@@ -83,7 +114,6 @@ export const MyNavbar: React.FC = () => {
                 />
               </Link>
             </div>
-
             {/* Desktop Navigation - Hidden on Mobile */}
             <nav className="hidden lg:flex items-center space-x-8">
               {/* Retirement Sale */}
@@ -94,8 +124,7 @@ export const MyNavbar: React.FC = () => {
                 <span>Retirement Sale</span>
                 <span className="absolute bottom-0 right-0 w-0 h-0.5 bg-gray-600 transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
               </Link>
-
-              {/* Shop By Collection Dropdown */}
+              {/* Shop By Collection Dropdown (Desktop) */}
               <div className="relative group">
                 <button
                   className="relative flex items-center space-x-1 hover:text-gray-600 transition-colors duration-200 uppercase text-xs tracking-wide font-medium py-8"
@@ -118,8 +147,7 @@ export const MyNavbar: React.FC = () => {
                   </svg>
                   <span className="absolute bottom-0 right-0 w-0 h-0.5 bg-gray-600 transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
                 </button>
-
-                {/* Dropdown Menu */}
+                {/* Dropdown Menu (Desktop) */}
                 <div
                   className={`absolute top-full left-0 mt-2 w-72 bg-white shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 ${
                     activeDropdown === "shop" ? "opacity-100 visible" : ""
@@ -129,6 +157,7 @@ export const MyNavbar: React.FC = () => {
                 >
                   <div className="py-4">
                     <div className="ml-4">
+                      {/* Shop All is always first, then dynamic collections */}
                       <Link
                         href="/product"
                         className="block px-6 py-3 text-sm text-gray-700 hover:text-white transition-all duration-200 relative group/item"
@@ -150,7 +179,6 @@ export const MyNavbar: React.FC = () => {
                   </div>
                 </div>
               </div>
-
               {/* Best Sellers */}
               <Link
                 href="/best-sellers"
@@ -159,7 +187,6 @@ export const MyNavbar: React.FC = () => {
                 <span>Best Sellers</span>
                 <span className="absolute bottom-0 right-0 w-0 h-0.5 bg-gray-600 transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
               </Link>
-
               {/* Returns and Exchanges */}
               <Link
                 href="/returns"
@@ -169,8 +196,7 @@ export const MyNavbar: React.FC = () => {
                 <span className="absolute bottom-0 right-0 w-0 h-0.5 bg-gray-600 transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
               </Link>
             </nav>
-
-            {/* Right Side Icons - Search and Cart on Mobile, All Icons on Desktop */}
+            {/* Right Side Icons - Search, Cart, Account */}
             <div className="flex items-center space-x-4 lg:space-x-6">
               {/* Account - Hidden on Mobile */}
               <Link
@@ -180,7 +206,6 @@ export const MyNavbar: React.FC = () => {
               >
                 <RiUser6Line size={20} />
               </Link>
-
               {/* Search */}
               <Link
                 href="/search"
@@ -189,7 +214,6 @@ export const MyNavbar: React.FC = () => {
               >
                 <RiSearchLine size={20} />
               </Link>
-
               {/* Cart */}
               <Link
                 href="/cart"
@@ -203,7 +227,7 @@ export const MyNavbar: React.FC = () => {
         </div>
       </header>
 
-      {/* Overlay */}
+      {/* Overlay for mobile menu */}
       <div
         className={`fixed inset-0 bg-black bg-opacity-30 z-40 lg:hidden transition-opacity duration-300 ${
           isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -211,7 +235,7 @@ export const MyNavbar: React.FC = () => {
         onClick={toggleMobileMenu}
       />
 
-      {/* Minimal Mobile Menu Sidebar */}
+      {/* Mobile Menu Sidebar (slide-in) */}
       <aside
         className={`fixed top-0 left-0 h-full w-96 max-w-[100vw] bg-white z-50 lg:hidden shadow-xl transform transition-transform duration-300 ease-in-out ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
@@ -228,7 +252,7 @@ export const MyNavbar: React.FC = () => {
             <RiCloseLine size={28} />
           </button>
         </div>
-        {/* Main Menu */}
+        {/* Main Menu (Mobile) */}
         <nav className="flex-1 flex flex-col justify-start px-8 pt-6 space-y-6">
           <Link
             href="/retirement-sale"
@@ -237,7 +261,7 @@ export const MyNavbar: React.FC = () => {
           >
             Retirement Sale
           </Link>
-          {/* SHOP with submenu */}
+          {/* SHOP with submenu (Mobile) */}
           <div>
             <button
               className="flex items-center justify-between w-full text-lg tracking-widest uppercase text-gray-900 hover:text-black py-2 focus:outline-none"
@@ -260,8 +284,10 @@ export const MyNavbar: React.FC = () => {
                 />
               </svg>
             </button>
+            {/* Dropdown for Shop By Collection (Mobile) */}
             {activeDropdown === "mobile-shop" && (
               <div className="pl-4 pt-2 space-y-2 animate-fadeIn">
+                {/* Shop All is always first, then dynamic collections */}
                 <Link
                   href="/product"
                   onClick={toggleMobileMenu}
@@ -282,6 +308,7 @@ export const MyNavbar: React.FC = () => {
               </div>
             )}
           </div>
+          {/* Other main menu items (Mobile) */}
           <Link
             href="/best-sellers"
             onClick={toggleMobileMenu}
@@ -311,7 +338,7 @@ export const MyNavbar: React.FC = () => {
             About Us
           </Link>
         </nav>
-        {/* Bottom: Account & Contact */}
+        {/* Bottom: Account & Contact (Mobile) */}
         <div className="px-8 pb-8 mt-auto space-y-4">
           <Link
             href="/account"
