@@ -129,14 +129,6 @@ const MyNavbar: React.FC = () => {
             </div>
             {/* Desktop Navigation - Hidden on Mobile */}
             <nav className="hidden lg:flex items-center space-x-8">
-              {/* Retirement Sale */}
-              <Link
-                href="/retirement-sale"
-                className="relative hover:text-gray-600 transition-colors duration-200 uppercase text-xs tracking-wide group py-8"
-              >
-                <span>Retirement Sale</span>
-                <span className="absolute bottom-0 right-0 w-0 h-0.5 bg-gray-600 transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
-              </Link>
               {/* Shop By Collection Dropdown (Desktop) */}
               <div className="relative group">
                 <button
@@ -267,13 +259,6 @@ const MyNavbar: React.FC = () => {
         </div>
         {/* Main Menu (Mobile) */}
         <nav className="flex-1 flex flex-col justify-start px-8 pt-6 space-y-6">
-          <Link
-            href="/retirement-sale"
-            onClick={toggleMobileMenu}
-            className="block text-lg tracking-widest uppercase text-gray-900 hover:text-black py-2"
-          >
-            Retirement Sale
-          </Link>
           {/* SHOP with submenu (Mobile) */}
           <div>
             <button
