@@ -234,7 +234,7 @@ const MyNavbar: React.FC = () => {
 
       {/* Overlay for mobile menu */}
       <div
-        className={`fixed inset-0 bg-black bg-opacity-30 z-40 lg:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-opacity-30 z-40 lg:hidden transition-opacity duration-300 ${
           isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={toggleMobileMenu}
